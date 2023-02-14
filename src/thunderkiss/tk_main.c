@@ -6,7 +6,7 @@ BWrite_fn BWrite[0x10000]={0};
 uint8_t RAM[0x800]={0};
 
 // Auto-halt after so many instructions if nonzero.
-static int ttl=20;
+static int ttl=4;
 
 static uint8_t *rom=0;
 static int romc=0;
@@ -96,19 +96,18 @@ int main(int argc,char **argv) {
   // If we call X6502_Power, it simulates an initial IRQ, and reads the initial PC from 0xfffc.
   // That's probably how it works in real life, but for this experiment I'd rather start at 0x0000 always.
   // Which is what happens when we run on a plain Init.
-  //X6502_Power();
-  //X6502_Reset();
+  //X6502_Power(); // fwiw Power contains a Reset
   
   dump_state();
   if (ttl) {
     while (ttl--) {
-      X6502_Run(1);
+      X6502_Run();
       dump_state();
     }
     fprintf(stderr,"Auto-abort due to TTL\n");
   } else {
     for (;;) {
-      X6502_Run(1);
+      X6502_Run();
       dump_state();
     }
   }

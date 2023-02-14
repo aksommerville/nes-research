@@ -398,7 +398,7 @@ case 0x72:
 case 0x92:
 case 0xB2:
 case 0xD2:
-case 0xF2:ADDCYC(0xFF);
+case 0xF2:
           _jammed=1;
     _PC--;
     break;
